@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <h3>
+        {{this.city}}
+      </h3>
+      <p>
+        {{this.clime}}°C
+      </p>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item class="ion-activatable ripple-parent" *ngFor="let account of ListAccount">
+        <ion-label>
+          <h3>{{account.acc_tp}}</h3>
+          <p>{{account.acc_i}}</p>
+        </ion-label>
+        <ion-label slot="end" class="ion-text-end text-small">{{account.acc_tl | currency}}</ion-label>
+        <ion-ripple-effect></ion-ripple-effect>
+    </ion-item>
+    
+  </ion-list>
+</ion-content>
