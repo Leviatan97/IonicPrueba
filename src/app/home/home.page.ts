@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { UserService } from '../service/user.service';
 import md5 from '../../../node_modules/md5';
 import { Router } from '@angular/router';
+import { AvailableResult, BiometryType, Credentials, NativeBiometric } from "capacitor-native-biometric";
 
 @Component({
   selector: 'app-home',
@@ -16,8 +17,46 @@ export class HomePage {
   constructor(
     private userService: UserService, 
     public toastController: ToastController,
-    private router: Router
-  ) {}
+    private router: Router,
+  ) {
+    
+  }
+
+  public prueba() {
+    console.log("entro al metodo");
+    NativeBiometric.isAvailable().then(
+      (result: AvailableResult) => {
+        const isAvailable = result.isAvailable;
+        const isFaceId = result.biometryType == BiometryType.FACE_ID;
+    
+        if (isAvailable) {
+          // Get user's credentials
+          NativeBiometric.getCredentials({
+            server: "www.example.com",
+          }).then((credentials: Credentials) => {
+            // Authenticate using biometrics before logging the user in
+            NativeBiometric.verifyIdentity({
+              reason: "For easy log in",
+              title: "Log in",
+              subtitle: "Maybe add subtitle here?",
+              description: "Maybe a description too?",
+            }).then(
+              () => {
+                // Authentication successful
+                // this.login(credentials.username, credentials.password);
+              },
+              (error) => {
+                // Failed to authenticate
+              }
+            );
+          });
+        }
+      },
+      (error) => {
+        // Couldn't check availability
+      }
+    );
+  }
 
   private validarCampos() {
     if(this.documento == undefined) {

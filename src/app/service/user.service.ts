@@ -17,7 +17,7 @@ export class UserService {
   ) { }
 
   public login(datos: any){
-    return this.http.post(`http://localhost:3000/login`, datos);
+    return this.http.post(`http://192.168.20.24:3000/login`, datos);
   }
 
   public async saveToken(token: string) {
@@ -52,7 +52,7 @@ export class UserService {
       const headers =  new HttpHeaders({
         'x-token': this.token.value
       })
-      this.http.get(`http://localhost:3000/user`,{headers}).subscribe( resp => {
+      this.http.get(`http://192.168.20.24:3000/user`,{headers}).subscribe( resp => {
         if(resp['respuesta'] == "OK") {
           resolve(true)
         }else {
@@ -69,7 +69,7 @@ export class UserService {
     const headers =  new HttpHeaders({
       'x-token': this.token.value
     })
-    return this.http.get(`http://localhost:3000/account`,{headers})
+    return this.http.get(`http://192.168.20.24:3000/account`,{headers})
   }
 
   public clime(lat: any, long: any) {
